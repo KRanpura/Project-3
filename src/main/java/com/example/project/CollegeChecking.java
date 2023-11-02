@@ -51,6 +51,11 @@ public class CollegeChecking extends Checking
         return this.campus; //campus is an enum constant
     }
 
+    public void setCampus(Campus newCampus)
+    {
+        this.campus = newCampus;
+    }
+
     /**
      * Helper method that returns the type of the account as a String for printing purposes.
      * @return type as a String

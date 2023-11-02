@@ -22,25 +22,28 @@ public class TransactionManagerController
     @FXML
     public TextField firstName, lastName;
     public TextField closefirstName, closelastName;
+    public TextField depOrWithFirstName, depOrWithLastName;
     @FXML
     public RadioButton checking, collegeChecking, savings, market, nb, newark,camden;
     public RadioButton closechecking,closecollegeChecking,closesavings, closemarket, closenb, closenewark, closecamden;
-    public DatePicker dob, closedob;
-    public ToggleGroup accountGroup,closeaccountGroup;
-    public TextField balance;
+    public RadioButton depWithChecking, depWithCollegeChecking, depWithSavings, depWithMarket, depWithNB, depWithNewark,
+                        depWithCamden;
+    public DatePicker dob, closedob, depOrWithdob;
+    public ToggleGroup accountGroup,closeaccountGroup, depWithAccountGroup;
+    public TextField balance, depOrWithBalance;
     public CheckBox loyal, closeloyal;
-    public ToggleGroup campusGroup,closecampusGroup;
+    public ToggleGroup campusGroup,closecampusGroup, depWithCampusGroup;
 
     //public ToggleGroup accountTypeGroup;
     @FXML
     private Label welcomeText;
 
 
-    @FXML
-    protected void onHelloButtonClick()
-    {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+//    @FXML
+//    protected void onHelloButtonClick()
+//    {
+//        welcomeText.setText("Welcome to JavaFX Application!");
+//    }
 //    @FXML
 //    private void initialize() {
 //        accountGroup = new ToggleGroup();
@@ -157,7 +160,7 @@ public void initialize() {
 }
 
     @FXML
-    private void openAccount(ActionEvent event)
+    private void openAccount() //I removed the ActionEvent event param bc we never use it
     {
         String firstNameStr = firstName.getText();
         String lastNameStr = lastName.getText();
@@ -165,83 +168,135 @@ public void initialize() {
         Date userDOB = new Date(dob.getValue().getMonthValue(), dob.getValue().getDayOfMonth(), dob.getValue().getYear());
         if (!userDOB.isValid())
         {
-            //do something here
+            //error label for invalid dob, toggle visibility on
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         String balanceStr = balance.getText();
         double balance = Double.parseDouble(balanceStr);
         //check for balance amount
-
-        if (checking.isSelected()) {
-            Account account = new Checking(user, balance);
-            db.open(account);
-            //check for return
+        if (balance <= 0)
+        {
+            //error label that says balance must be positive, toggle visibility on
         }
-        if(savings.isSelected())
+        Account account = null;
+        if (checking.isSelected())
+        {
+            account = new Checking(user, balance);
+        }
+        else if(savings.isSelected())
         {
             if(loyal.isSelected())
             {
-                Account account = new Savings(user, balance, true);
-                db.open(account);
+                account = new Savings(user, balance, true);
             }
-            else{
-                Account account = new Savings(user, balance, false);
-                db.open(account);
-            }
-        }
-        //do money saving balance check, for simplicity sake i am not gonna do it for now
-        if(market.isSelected())
-        {
-            if(balance>2000) {
-                Account account = new MoneyMarket(user, balance);
-                db.open(account);
+            else
+            {
+                account = new Savings(user, balance, false);
             }
         }
-
-        //college account stuff
-        if(collegeChecking.isSelected())
+        else if(market.isSelected())
         {
+            if(balance>2000)
+            {
+                account = new MoneyMarket(user, balance);
+            }
+            else
+            {
+                //display error here by making a label and having its visibility set to false,
+            }
+        }
+        else if(collegeChecking.isSelected())
+        {
+            CollegeChecking collegeAcc = new CollegeChecking(user, balance, null);
             if(nb.isSelected())
             {
-                Campus newBrunswick = Campus.NEW_BRUNSWICK;
-                Account account = new CollegeChecking(user, balance, newBrunswick);
-                db.open(account);
+                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
             }
-            if(newark.isSelected())
+            else if(newark.isSelected())
             {
-                Campus NEWARK = Campus.NEWARK;
-                Account account = new CollegeChecking(user, balance, NEWARK);
-                db.open(account);
+                collegeAcc.setCampus(Campus.NEWARK);
             }
-            if(camden.isSelected())
+            else if(camden.isSelected())
             {
-                Campus CAMDEN = Campus.CAMDEN;
-                Account account = new CollegeChecking(user, balance, CAMDEN);
-                db.open(account);
+                collegeAcc.setCampus(Campus.CAMDEN);
             }
-
+            account = collegeAcc;
         }
-
+        if (!db.open(account))
+        {
+            //print error- this user is already in the database
+        }
     }
+
     @FXML
-    private void closeAccount(ActionEvent event)
+    private void closeAccount()
     {
         String firstNameStr = closefirstName.getText();
         String lastNameStr = closelastName.getText();
         String dobStr = closedob.getValue().toString();
-        Date userDOB = new Date(closedob.getValue().getMonthValue(), closedob.getValue().getDayOfMonth(), closedob.getValue().getYear());
+        Date userDOB = new Date(closedob.getValue().getMonthValue(), closedob.getValue().getDayOfMonth(),
+                closedob.getValue().getYear());
         if (!userDOB.isValid())
         {
-            //do something here
+            //make label with error message and toggle visibility on
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
-        if(closechecking.isSelected())
+        Account account = null;
+        if (closechecking.isSelected())
         {
-            Account account = new Checking(user,0);
-            db.close(account);
+            account = new Checking(user, 0);
         }
+        else if(closesavings.isSelected())
+        {
+            if(closeloyal.isSelected())
+            {
+                account = new Savings(user, 0, true);
+            }
+            else
+            {
+                account = new Savings(user, 0, false);
+            }
+        }
+        else if(closemarket.isSelected())
+        {
+            account = new MoneyMarket(user, 0);
+        }
+        else if(closecollegeChecking.isSelected())
+        {
+            CollegeChecking collegeAcc = new CollegeChecking(user, 0, null);
+            if(closenb.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
+            }
+            else if(closenewark.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEWARK);
+            }
+            else if(closecamden.isSelected())
+            {
+                collegeAcc.setCampus(Campus.CAMDEN);
+            }
+            account = collegeAcc;
+        }
+        if (!db.close(account))
+        {
+            //print error- this user is already in the database
+        }
+    }
+
+    @FXML
+    private void depositAccount()
+    {
 
     }
+
+    @FXML
+    private void withdrawAccount()
+    {
+
+    }
+
+
 
 
 }
