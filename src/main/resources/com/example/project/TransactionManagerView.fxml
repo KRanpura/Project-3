@@ -407,10 +407,10 @@
                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                              </rowConstraints>
                               <children>
-                                 <Button mnemonicParsing="false" text="Print All Accounts" />
-                                 <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
+                                 <Button onAction="#printAllAccounts" mnemonicParsing="false" text="Print All Accounts" />
+                                 <Button onAction="#printInterestsAndFees" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
                                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" text="Load Accounts from File" GridPane.columnIndex="1" />
-                                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
+                                 <Button onAction="#updateAccWithFees" mnemonicParsing="false" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
                               </children>
                            </GridPane>
                            <TextField fx:id="displayField" editable="false" layoutX="27.0" layoutY="85.0" prefHeight="230.0" prefWidth="635.0" />

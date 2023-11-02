@@ -201,7 +201,7 @@ public class AccountDatabase
         {
             return("Account database is empty!");
         }
-        String sorted = "*Accounts sorted by account type and profile.";
+        String sorted = "*Accounts sorted by account type and profile.\n";
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {

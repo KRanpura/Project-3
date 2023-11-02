@@ -252,6 +252,24 @@ public void initialize() {
     @FXML
     private void openAccount() //I removed the ActionEvent event param bc we never use it
     {
+        if(firstName.getText().isEmpty() || lastName.getText().isEmpty() || balance.getText().isEmpty() || dob.getValue()==null)
+        {
+            displayError("Please fill in missing fields!");
+            return;
+        }
+        if(!(checking.isSelected()|| collegeChecking.isSelected()||savings.isSelected()||market.isSelected()))
+        {
+            displayError("Please choose an account type!");
+            return;
+        }
+        if(collegeChecking.isSelected())
+        {
+            if(!(nb.isSelected() || newark.isSelected() || camden.isSelected()))
+            {
+                displayError("Please choose a campus!");
+                return;
+            }
+        }
         String firstNameStr = firstName.getText();
         String lastNameStr = lastName.getText();
         //String dobStr = dob.getValue().toString();
@@ -346,6 +364,24 @@ public void initialize() {
     @FXML
     private void closeAccount()
     {
+        if(closefirstName.getText().isEmpty() || closelastName.getText().isEmpty() ||  closedob.getValue()==null)
+        {
+            displayError("Please fill in missing fields!");
+            return;
+        }
+        if(!(closechecking.isSelected()|| closecollegeChecking.isSelected()||closesavings.isSelected()||closemarket.isSelected()))
+        {
+            displayError("Please choose an account type!");
+            return;
+        }
+        if(closecollegeChecking.isSelected())
+        {
+            if(!(closenb.isSelected() || closenewark.isSelected() || closecamden.isSelected()))
+            {
+                displayError("Please choose a campus!");
+                return;
+            }
+        }
         String firstNameStr = closefirstName.getText();
         String lastNameStr = closelastName.getText();
       //  String dobStr = closedob.getValue().toString();
@@ -409,6 +445,24 @@ public void initialize() {
     @FXML
     private void depositAccount()
     {
+        if(depfirstName.getText().isEmpty() || deplastName.getText().isEmpty() || deposit.getText().isEmpty() || depdob.getValue()==null)
+        {
+            displayError("Please fill in missing fields!");
+            return;
+        }
+        if(!(depchecking.isSelected()|| depcollegeChecking.isSelected()||depsavings.isSelected()||depmarket.isSelected()))
+        {
+            displayError("Please choose an account type!");
+            return;
+        }
+        if(depcollegeChecking.isSelected())
+        {
+            if(!(depnb.isSelected() || depnewark.isSelected() || depcamden.isSelected()))
+            {
+                displayError("Please choose a campus!");
+                return;
+            }
+        }
         String firstNameStr = depfirstName.getText();
         String lastNameStr = deplastName.getText();
       //  String dobStr = depdob.getValue().toString();
@@ -464,6 +518,24 @@ public void initialize() {
     @FXML
     private void withdrawAccount()
     {
+        if(witfirstName.getText().isEmpty() || witlastName.getText().isEmpty() || withdraw.getText().isEmpty() || witdob.getValue()==null)
+        {
+            displayError("Please fill in missing fields!");
+            return;
+        }
+        if(!(witchecking.isSelected()|| witcollegeChecking.isSelected()||witsavings.isSelected()||witmarket.isSelected()))
+        {
+            displayError("Please choose an account type!");
+            return;
+        }
+        if(witcollegeChecking.isSelected())
+        {
+            if(!(witnb.isSelected() || witnewark.isSelected() || witcamden.isSelected()))
+            {
+                displayError("Please choose a campus!");
+                return;
+            }
+        }
         String firstNameStr = witfirstName.getText();
         String lastNameStr = witlastName.getText();
         String dobStr = witdob.getValue().toString();
