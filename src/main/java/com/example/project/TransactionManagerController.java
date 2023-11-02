@@ -22,17 +22,19 @@ public class TransactionManagerController
     @FXML
     public TextField firstName, lastName;
     public TextField closefirstName, closelastName;
-    public TextField depOrWithFirstName, depOrWithLastName;
+    public TextField depfirstName, deplastName;
+    public TextField witfirstName, witlastName;
     @FXML
     public RadioButton checking, collegeChecking, savings, market, nb, newark,camden;
     public RadioButton closechecking,closecollegeChecking,closesavings, closemarket, closenb, closenewark, closecamden;
-    public RadioButton depWithChecking, depWithCollegeChecking, depWithSavings, depWithMarket, depWithNB, depWithNewark,
-                        depWithCamden;
-    public DatePicker dob, closedob, depOrWithdob;
-    public ToggleGroup accountGroup,closeaccountGroup, depWithAccountGroup;
-    public TextField balance, depOrWithBalance;
+    public RadioButton depchecking, depcollegeChecking, depsavings, depmarket, depnb, depnewark, depcamden;
+
+    public RadioButton witchecking, witcollegeChecking, witsavings, witmarket, witnb, witnewark, witcamden;
+    public DatePicker dob, closedob, depdob, witdob;
+    public ToggleGroup accountGroup,closeaccountGroup, depaccountGroup, witaccountGroup;
+    public TextField balance, deposit, withdraw;
     public CheckBox loyal, closeloyal;
-    public ToggleGroup campusGroup,closecampusGroup, depWithCampusGroup;
+    public ToggleGroup campusGroup,closecampusGroup, depcampusGroup, witcampusGroup;
 
     //public ToggleGroup accountTypeGroup;
     @FXML
@@ -59,6 +61,10 @@ public void initialize() {
         newark.setToggleGroup(campusGroup);
         camden.setToggleGroup(campusGroup);
 
+        checking.setToggleGroup(accountGroup);
+        collegeChecking.setToggleGroup(accountGroup);
+        savings.setToggleGroup(accountGroup);
+        market.setToggleGroup(accountGroup);
 
         closechecking.setToggleGroup(closeaccountGroup);
         closecollegeChecking.setToggleGroup(closeaccountGroup);
@@ -69,7 +75,38 @@ public void initialize() {
         closenewark.setToggleGroup(closecampusGroup);
         closecamden.setToggleGroup(closecampusGroup);
 
+        depchecking.setToggleGroup(depaccountGroup);
+        depcollegeChecking.setToggleGroup(depaccountGroup);
+        depmarket.setToggleGroup(depaccountGroup);
+        depsavings.setToggleGroup(depaccountGroup);
+
+        depnb.setToggleGroup(depcampusGroup);
+        depnewark.setToggleGroup(depcampusGroup);
+        depcamden.setToggleGroup(depcampusGroup);
+
+        witchecking.setToggleGroup(witaccountGroup);
+        witcollegeChecking.setToggleGroup(witaccountGroup);
+        witmarket.setToggleGroup(witaccountGroup);
+        witsavings.setToggleGroup(witaccountGroup);
+
+        witnb.setToggleGroup(witcampusGroup);
+        witnewark.setToggleGroup(witcampusGroup);
+        witcamden.setToggleGroup(witcampusGroup);
+
     balance.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        String character = event.getCharacter();
+        if (!character.matches("[0-9]")) {
+            event.consume(); // Consume the event to prevent non-numeric input
+        }
+    });
+    deposit.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        String character = event.getCharacter();
+        if (!character.matches("[0-9]")) {
+            event.consume(); // Consume the event to prevent non-numeric input
+        }
+    });
+
+    withdraw.addEventFilter(KeyEvent.KEY_TYPED, event -> {
         String character = event.getCharacter();
         if (!character.matches("[0-9]")) {
             event.consume(); // Consume the event to prevent non-numeric input
@@ -85,6 +122,14 @@ public void initialize() {
     closenewark.setDisable(true);
     closecamden.setDisable(true);
     closeloyal.setDisable(true);
+
+    depnb.setDisable(true);
+    depnewark.setDisable(true);
+    depcamden.setDisable(true);
+
+    witnb.setDisable(true);
+    witnewark.setDisable(true);
+    witcamden.setDisable(true);
 
     collegeChecking.setOnAction(e -> {
         if (collegeChecking.isSelected()) {
@@ -157,6 +202,68 @@ public void initialize() {
         }
     });
 
+
+
+    depcollegeChecking.setOnAction(e -> {
+        if (depcollegeChecking.isSelected()) {
+            depnb.setDisable(false);
+            depnewark.setDisable(false);
+            depcamden.setDisable(false);
+        }
+    });
+    depchecking.setOnAction(e -> {
+        if (depchecking.isSelected()) {
+            depnb.setDisable(true);
+            depnewark.setDisable(true);
+            depcamden.setDisable(true);
+        }
+    });
+    depsavings.setOnAction(e -> {
+        if (depsavings.isSelected()) {
+            depnb.setDisable(true);
+            depnewark.setDisable(true);
+            depcamden.setDisable(true);
+        }
+    });
+    depmarket.setOnAction(e -> {
+        if (depmarket.isSelected()) {
+            depnb.setDisable(true);
+            depnewark.setDisable(true);
+            depcamden.setDisable(true);
+        }
+    });
+
+
+
+    witcollegeChecking.setOnAction(e -> {
+        if (witcollegeChecking.isSelected()) {
+            witnb.setDisable(false);
+            witnewark.setDisable(false);
+            witcamden.setDisable(false);
+        }
+    });
+    witchecking.setOnAction(e -> {
+        if (witchecking.isSelected()) {
+            witnb.setDisable(true);
+            witnewark.setDisable(true);
+            witcamden.setDisable(true);
+        }
+    });
+    witsavings.setOnAction(e -> {
+        if (witsavings.isSelected()) {
+            witnb.setDisable(true);
+            witnewark.setDisable(true);
+            witcamden.setDisable(true);
+        }
+    });
+    witmarket.setOnAction(e -> {
+        if (witmarket.isSelected()) {
+            witnb.setDisable(true);
+            witnewark.setDisable(true);
+            witcamden.setDisable(true);
+        }
+    });
+
 }
 
     @FXML
@@ -222,9 +329,11 @@ public void initialize() {
             }
             account = collegeAcc;
         }
-        if (!db.open(account))
+        //store in variablle because calling it multiple times will give it diff results
+        boolean opened = db.open(account);
+        if(!opened)
         {
-            //print error- this user is already in the database
+
         }
     }
 
@@ -278,21 +387,130 @@ public void initialize() {
             }
             account = collegeAcc;
         }
-        if (!db.close(account))
+        //store in variable because calling it multiple times will give it diff results
+        boolean opened = db.open(account);
+        if(!opened)
         {
-            //print error- this user is already in the database
+
         }
     }
 
     @FXML
     private void depositAccount()
     {
+        String firstNameStr = depfirstName.getText();
+        String lastNameStr = deplastName.getText();
+        String dobStr = depdob.getValue().toString();
+        Date userDOB = new Date(depdob.getValue().getMonthValue(), depdob.getValue().getDayOfMonth(), depdob.getValue().getYear());
+        if (!userDOB.isValid())
+        {
+            //error label for invalid dob, toggle visibility on
+        }
+        Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
+        String depositStr = deposit.getText();
+        double deposit = Double.parseDouble(depositStr);
+        //check for balance amount
+        if (deposit <= 0)
+        {
+            //error label that says balance must be positive, toggle visibility on
+        }
+        Account account = null;
+        if (depchecking.isSelected())
+        {
+            account = new Checking(user, deposit);
+        }
+        else if(depsavings.isSelected())
+        {
+
+                account = new Savings(user, deposit, true);
+
+        }
+        else if(depmarket.isSelected())
+        {
+
+                account = new MoneyMarket(user, deposit);
+
+        }
+        else if(depcollegeChecking.isSelected())
+        {
+            CollegeChecking collegeAcc = new CollegeChecking(user, deposit, null);
+            if(depnb.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
+            }
+            else if(depnewark.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEWARK);
+            }
+            else if(depcamden.isSelected())
+            {
+                collegeAcc.setCampus(Campus.CAMDEN);
+            }
+            account = collegeAcc;
+        }
+        db.deposit(account);
+
 
     }
 
     @FXML
     private void withdrawAccount()
     {
+        String firstNameStr = witfirstName.getText();
+        String lastNameStr = witlastName.getText();
+        String dobStr = witdob.getValue().toString();
+        Date userDOB = new Date(witdob.getValue().getMonthValue(), witdob.getValue().getDayOfMonth(), witdob.getValue().getYear());
+        if (!userDOB.isValid())
+        {
+            //error label for invalid dob, toggle visibility on
+        }
+        Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
+        String withdrawStr = withdraw.getText();
+        double withdraw = Double.parseDouble(withdrawStr);
+        //check for balance amount
+        if (withdraw <= 0)
+        {
+            //error label that says balance must be positive, toggle visibility on
+        }
+        Account account = null;
+        if (witchecking.isSelected())
+        {
+            account = new Checking(user, withdraw);
+        }
+        else if(witsavings.isSelected())
+        {
+
+            account = new Savings(user, withdraw, true);
+
+        }
+        else if(witmarket.isSelected())
+        {
+
+            account = new MoneyMarket(user, withdraw);
+
+        }
+        else if(witcollegeChecking.isSelected())
+        {
+            CollegeChecking collegeAcc = new CollegeChecking(user, withdraw, null);
+            if(witnb.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
+            }
+            else if(witnewark.isSelected())
+            {
+                collegeAcc.setCampus(Campus.NEWARK);
+            }
+            else if(witcamden.isSelected())
+            {
+                collegeAcc.setCampus(Campus.CAMDEN);
+            }
+            account = collegeAcc;
+        }
+        boolean withdrew = db.withdraw(account);
+        if(!withdrew)
+        {
+            //failed
+        }
 
     }
 
