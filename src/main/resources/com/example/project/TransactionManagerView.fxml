@@ -7,6 +7,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -290,7 +291,7 @@
                                                 </RadioButton>
                                             </children>
                                         </GridPane>
-                                 <Button fx:id="depositAccount" mnemonicParsing="false" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                 <Button onAction="#depositAccount" mnemonicParsing="false" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                  <Label text="Amount" GridPane.columnIndex="3" />
                                  <TextField fx:id="deposit" GridPane.columnIndex="4" />
                                     </children>
@@ -383,7 +384,7 @@
                                                </RadioButton>
                                            </children>
                                        </GridPane>
-                                       <Button fx:id="withdrawAccount" mnemonicParsing="false" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                       <Button onAction="#withdrawAccount" mnemonicParsing="false" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                        <Label text="Amount" GridPane.columnIndex="3" />
                                        <TextField fx:id="withdraw" GridPane.columnIndex="4" />
                                    </children>
@@ -394,7 +395,27 @@
                </Tab>
                 <Tab text="Account Database">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                           <GridPane layoutX="27.0" layoutY="11.0" prefHeight="55.0" prefWidth="702.0" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="-27.0" AnchorPane.topAnchor="11.0">
+                             <columnConstraints>
+                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.5" minWidth="10.0" prefWidth="114.5" />
+                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.5" minWidth="10.0" prefWidth="155.0" />
+                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="157.5" />
+                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="274.0" />
+                             </columnConstraints>
+                             <rowConstraints>
+                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                             </rowConstraints>
+                              <children>
+                                 <Button mnemonicParsing="false" onAction= "#printAllAccounts" text="Print All Accounts" />
+                                 <Button mnemonicParsing="false" onAction = "#printInterestsAndFees" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
+                                 <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" text="Load Accounts from File" GridPane.columnIndex="1" />
+                                 <Button mnemonicParsing="false" onAction = "#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
+                              </children>
+                           </GridPane>
+                           <TextArea editable="false" layoutX="30.0" layoutY="76.0" prefHeight="251.0" prefWidth="624.0" />
+                        </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>

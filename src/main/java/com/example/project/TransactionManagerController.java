@@ -18,17 +18,20 @@ import javafx.scene.control.Alert.AlertType;
 public class TransactionManagerController
 {
 
+    private static final double DAYS_IN_YEAR = 365.25;
+    private static final int MAX_COLLEGE_AGE = 24;
+    private static final int MIN_AGE_FOR_ACCOUNT = 16;
     public AccountDatabase db = new AccountDatabase();
     @FXML
     public TextField firstName, lastName;
     public TextField closefirstName, closelastName;
     public TextField depfirstName, deplastName;
     public TextField witfirstName, witlastName;
+    public TextField displayField;
     @FXML
     public RadioButton checking, collegeChecking, savings, market, nb, newark,camden;
     public RadioButton closechecking,closecollegeChecking,closesavings, closemarket, closenb, closenewark, closecamden;
     public RadioButton depchecking, depcollegeChecking, depsavings, depmarket, depnb, depnewark, depcamden;
-
     public RadioButton witchecking, witcollegeChecking, witsavings, witmarket, witnb, witnewark, witcamden;
     public DatePicker dob, closedob, depdob, witdob;
     public ToggleGroup accountGroup,closeaccountGroup, depaccountGroup, witaccountGroup;
@@ -36,24 +39,6 @@ public class TransactionManagerController
     public CheckBox loyal, closeloyal;
     public ToggleGroup campusGroup,closecampusGroup, depcampusGroup, witcampusGroup;
 
-    //public ToggleGroup accountTypeGroup;
-    @FXML
-    private Label welcomeText;
-
-
-//    @FXML
-//    protected void onHelloButtonClick()
-//    {
-//        welcomeText.setText("Welcome to JavaFX Application!");
-//    }
-//    @FXML
-//    private void initialize() {
-//        accountGroup = new ToggleGroup();
-//        checking.setToggleGroup(accountGroup);
-//        collegeChecking.setToggleGroup(accountGroup);
-//        savings.setToggleGroup(accountGroup);
-//        market.setToggleGroup(accountGroup);
-//    }
 @FXML
 public void initialize() {
 
@@ -166,7 +151,6 @@ public void initialize() {
         }
     });
 
-
     closecollegeChecking.setOnAction(e -> {
         if (closecollegeChecking.isSelected()) {
             closenb.setDisable(false);
@@ -234,7 +218,6 @@ public void initialize() {
     });
 
 
-
     witcollegeChecking.setOnAction(e -> {
         if (witcollegeChecking.isSelected()) {
             witnb.setDisable(false);
@@ -271,19 +254,29 @@ public void initialize() {
     {
         String firstNameStr = firstName.getText();
         String lastNameStr = lastName.getText();
-        String dobStr = dob.getValue().toString();
+        //String dobStr = dob.getValue().toString();
         Date userDOB = new Date(dob.getValue().getMonthValue(), dob.getValue().getDayOfMonth(), dob.getValue().getYear());
+        Date today = new Date();
         if (!userDOB.isValid())
         {
-            //error label for invalid dob, toggle visibility on
+            String error = "DOB invalid:" + userDOB.toString() + " not a valid calendar date!";
+            displayError(error);
+            return;
+        }
+        if (userDOB.compareTo(today) < 0)
+        {
+            displayError("DOB invalid: " + userDOB.toString() + " cannot be today or a future day!");
+        }
+        else if (userDOB.compareTo(today) / DAYS_IN_YEAR < MIN_AGE_FOR_ACCOUNT)
+        {
+            displayError("DOB invalid: " + userDOB.toString() + " under 16.");
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         String balanceStr = balance.getText();
         double balance = Double.parseDouble(balanceStr);
-        //check for balance amount
         if (balance <= 0)
         {
-            //error label that says balance must be positive, toggle visibility on
+            displayError("Initial deposit cannot be 0 or negative.");
         }
         Account account = null;
         if (checking.isSelected())
@@ -309,12 +302,18 @@ public void initialize() {
             }
             else
             {
-                //display error here by making a label and having its visibility set to false,
+                displayError("Minimum of $2000 to open a Money Market account.");
+                return;
             }
         }
         else if(collegeChecking.isSelected())
         {
             CollegeChecking collegeAcc = new CollegeChecking(user, balance, null);
+            if (userDOB.compareTo(today) / DAYS_IN_YEAR > MAX_COLLEGE_AGE)
+            {
+                displayError("DOB invalid: " + userDOB.toString() + " over 24.");
+                return;
+            }
             if(nb.isSelected())
             {
                 collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
@@ -333,7 +332,12 @@ public void initialize() {
         boolean opened = db.open(account);
         if(!opened)
         {
-
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") is already in the database");
+            return;
+        }
+        else
+        {
+            displayMessage(user.toString() + "(" + account.getTypeInitial() + ") opened.");
         }
     }
 
@@ -342,12 +346,14 @@ public void initialize() {
     {
         String firstNameStr = closefirstName.getText();
         String lastNameStr = closelastName.getText();
-        String dobStr = closedob.getValue().toString();
+      //  String dobStr = closedob.getValue().toString();
         Date userDOB = new Date(closedob.getValue().getMonthValue(), closedob.getValue().getDayOfMonth(),
                 closedob.getValue().getYear());
         if (!userDOB.isValid())
         {
-            //make label with error message and toggle visibility on
+            String error = "DOB invalid:" + userDOB.toString() + "cannot be today or a future day.";
+            displayError(error);
+            return;
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         Account account = null;
@@ -387,11 +393,14 @@ public void initialize() {
             }
             account = collegeAcc;
         }
-        //store in variable because calling it multiple times will give it diff results
-        boolean opened = db.open(account);
-        if(!opened)
+        boolean closed = db.close(account);
+        if(!closed)
         {
-
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") is not in the database.");
+        }
+        else
+        {
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") has been closed.");
         }
     }
 
@@ -400,19 +409,21 @@ public void initialize() {
     {
         String firstNameStr = depfirstName.getText();
         String lastNameStr = deplastName.getText();
-        String dobStr = depdob.getValue().toString();
+      //  String dobStr = depdob.getValue().toString();
         Date userDOB = new Date(depdob.getValue().getMonthValue(), depdob.getValue().getDayOfMonth(), depdob.getValue().getYear());
         if (!userDOB.isValid())
         {
-            //error label for invalid dob, toggle visibility on
+            String error = "DOB invalid:" + userDOB.toString() + "cannot be today or a future day.";
+            displayError(error);
+            return;
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         String depositStr = deposit.getText();
         double deposit = Double.parseDouble(depositStr);
-        //check for balance amount
         if (deposit <= 0)
         {
-            //error label that says balance must be positive, toggle visibility on
+            displayError("Deposit - amount cannot be 0 or negative.");
+            return;
         }
         Account account = null;
         if (depchecking.isSelected())
@@ -421,15 +432,11 @@ public void initialize() {
         }
         else if(depsavings.isSelected())
         {
-
-                account = new Savings(user, deposit, true);
-
+            account = new Savings(user, deposit, true);
         }
         else if(depmarket.isSelected())
         {
-
-                account = new MoneyMarket(user, deposit);
-
+            account = new MoneyMarket(user, deposit);
         }
         else if(depcollegeChecking.isSelected())
         {
@@ -449,8 +456,7 @@ public void initialize() {
             account = collegeAcc;
         }
         db.deposit(account);
-
-
+        displayMessage(user.toString() + "(" + account.getTypeInitial() + ") Deposit - balance updated.");
     }
 
     @FXML
@@ -462,15 +468,17 @@ public void initialize() {
         Date userDOB = new Date(witdob.getValue().getMonthValue(), witdob.getValue().getDayOfMonth(), witdob.getValue().getYear());
         if (!userDOB.isValid())
         {
-            //error label for invalid dob, toggle visibility on
+            String error = "DOB invalid:" + userDOB.toString() + "cannot be today or a future day.";
+            displayError(error);
+            return;
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         String withdrawStr = withdraw.getText();
         double withdraw = Double.parseDouble(withdrawStr);
-        //check for balance amount
         if (withdraw <= 0)
         {
-            //error label that says balance must be positive, toggle visibility on
+            displayError("Withdraw - amount cannot be 0 or negative.");
+            return;
         }
         Account account = null;
         if (witchecking.isSelected())
@@ -479,15 +487,11 @@ public void initialize() {
         }
         else if(witsavings.isSelected())
         {
-
             account = new Savings(user, withdraw, true);
-
         }
         else if(witmarket.isSelected())
         {
-
             account = new MoneyMarket(user, withdraw);
-
         }
         else if(witcollegeChecking.isSelected())
         {
@@ -506,15 +510,63 @@ public void initialize() {
             }
             account = collegeAcc;
         }
+        if (!db.contains(account))
+        {
+            String s = user.toString() + "(" + account.getTypeInitial() + ") is not in the database.";
+            displayError(s);
+            return;
+        }
         boolean withdrew = db.withdraw(account);
         if(!withdrew)
         {
-            //failed
+            displayError("Withdraw- insufficient funds!");
+            return;
+        }
+        else
+        {
+            displayMessage("Withdraw- balance updated.");
         }
 
     }
 
+    private void displayError (String s)
+    {
+//        if (!verbose)
+//            return;
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+        alert.show();
+    }
 
+    private void displayMessage(String s)
+    {
+//        if (!verbose)
+//            return;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+        alert.show();
+    }
+    @FXML
+    private void printAllAccounts()
+    {
+        String displayString = db.printSorted();
+        displayField.setText(displayString);
+    }
 
+    @FXML
+    private void printInterestsAndFees()
+    {
+        String displayString = db.printFeesAndInterests();
+        displayField.setText(displayString);
+    }
+
+    @FXML
+    private void updateAccWithFees()
+    {
+        String displayString = db.printUpdatedBalances();
+        displayField.setText(displayString);
+    }
 
 }

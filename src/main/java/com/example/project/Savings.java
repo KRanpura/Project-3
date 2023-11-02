@@ -88,7 +88,7 @@ public class Savings extends Account
      * for printing purposes.
      * @return type initial as a string
      */
-    public String getTypeInitial() { return "MM";}
+    public String getTypeInitial() { return "S";}
 
     /**
      * Getter method to get loyalty status of the savings account
