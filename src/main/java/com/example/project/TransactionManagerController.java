@@ -266,10 +266,12 @@ public void initialize() {
         if (userDOB.compareTo(today) < 0)
         {
             displayError("DOB invalid: " + userDOB.toString() + " cannot be today or a future day!");
+            return;
         }
         else if (userDOB.compareTo(today) / DAYS_IN_YEAR < MIN_AGE_FOR_ACCOUNT)
         {
             displayError("DOB invalid: " + userDOB.toString() + " under 16.");
+            return;
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
         String balanceStr = balance.getText();

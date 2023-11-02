@@ -7,7 +7,6 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -291,7 +290,7 @@
                                                 </RadioButton>
                                             </children>
                                         </GridPane>
-                                 <Button onAction="#depositAccount" mnemonicParsing="false" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                 <Button mnemonicParsing="false" onAction="#depositAccount" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                  <Label text="Amount" GridPane.columnIndex="3" />
                                  <TextField fx:id="deposit" GridPane.columnIndex="4" />
                                     </children>
@@ -384,7 +383,7 @@
                                                </RadioButton>
                                            </children>
                                        </GridPane>
-                                       <Button onAction="#withdrawAccount" mnemonicParsing="false" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                       <Button mnemonicParsing="false" onAction="#withdrawAccount" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                        <Label text="Amount" GridPane.columnIndex="3" />
                                        <TextField fx:id="withdraw" GridPane.columnIndex="4" />
                                    </children>
@@ -408,13 +407,13 @@
                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                              </rowConstraints>
                               <children>
-                                 <Button mnemonicParsing="false" onAction= "#printAllAccounts" text="Print All Accounts" />
-                                 <Button mnemonicParsing="false" onAction = "#printInterestsAndFees" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
+                                 <Button mnemonicParsing="false" text="Print All Accounts" />
+                                 <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
                                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" text="Load Accounts from File" GridPane.columnIndex="1" />
-                                 <Button mnemonicParsing="false" onAction = "#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
+                                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
                               </children>
                            </GridPane>
-                           <TextArea editable="false" layoutX="30.0" layoutY="76.0" prefHeight="251.0" prefWidth="624.0" />
+                           <TextField fx:id="displayField" editable="false" layoutX="27.0" layoutY="85.0" prefHeight="230.0" prefWidth="635.0" />
                         </children></AnchorPane>
                     </content>
                 </Tab>
