@@ -21,13 +21,15 @@ public class TransactionManagerController
     public AccountDatabase db = new AccountDatabase();
     @FXML
     public TextField firstName, lastName;
+    public TextField closefirstName, closelastName;
     @FXML
     public RadioButton checking, collegeChecking, savings, market, nb, newark,camden;
-    public DatePicker dob;
-    public ToggleGroup accountGroup;
-    public TextField deposit;
-    public CheckBox loyal;
-    public ToggleGroup campusGroup;
+    public RadioButton closechecking,closecollegeChecking,closesavings, closemarket, closenb, closenewark, closecamden;
+    public DatePicker dob, closedob;
+    public ToggleGroup accountGroup,closeaccountGroup;
+    public TextField balance;
+    public CheckBox loyal, closeloyal;
+    public ToggleGroup campusGroup,closecampusGroup;
 
     //public ToggleGroup accountTypeGroup;
     @FXML
@@ -54,7 +56,17 @@ public void initialize() {
         newark.setToggleGroup(campusGroup);
         camden.setToggleGroup(campusGroup);
 
-    deposit.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+
+        closechecking.setToggleGroup(closeaccountGroup);
+        closecollegeChecking.setToggleGroup(closeaccountGroup);
+        closemarket.setToggleGroup(closeaccountGroup);
+        closesavings.setToggleGroup(closeaccountGroup);
+
+        closenb.setToggleGroup(closecampusGroup);
+        closenewark.setToggleGroup(closecampusGroup);
+        closecamden.setToggleGroup(closecampusGroup);
+
+    balance.addEventFilter(KeyEvent.KEY_TYPED, event -> {
         String character = event.getCharacter();
         if (!character.matches("[0-9]")) {
             event.consume(); // Consume the event to prevent non-numeric input
@@ -65,10 +77,14 @@ public void initialize() {
     newark.setDisable(true);
     camden.setDisable(true);
     loyal.setDisable(true);
-    // Add an event handler for the collegeChecking RadioButton
+
+    closenb.setDisable(true);
+    closenewark.setDisable(true);
+    closecamden.setDisable(true);
+    closeloyal.setDisable(true);
+
     collegeChecking.setOnAction(e -> {
         if (collegeChecking.isSelected()) {
-            // Enable the options when collegeChecking is selected
             nb.setDisable(false);
             newark.setDisable(false);
             camden.setDisable(false);
@@ -77,7 +93,6 @@ public void initialize() {
     });
     checking.setOnAction(e -> {
         if (checking.isSelected()) {
-            // Enable the options when collegeChecking is selected
             nb.setDisable(true);
             newark.setDisable(true);
             camden.setDisable(true);
@@ -87,7 +102,6 @@ public void initialize() {
     });
     savings.setOnAction(e -> {
         if (savings.isSelected()) {
-            // Enable the options when collegeChecking is selected
             nb.setDisable(true);
             newark.setDisable(true);
             camden.setDisable(true);
@@ -97,11 +111,46 @@ public void initialize() {
     });
     market.setOnAction(e -> {
         if (market.isSelected()) {
-            // Enable the options when collegeChecking is selected
             nb.setDisable(true);
             newark.setDisable(true);
             camden.setDisable(true);
             loyal.setDisable(false);
+        }
+    });
+
+
+    closecollegeChecking.setOnAction(e -> {
+        if (closecollegeChecking.isSelected()) {
+            closenb.setDisable(false);
+            closenewark.setDisable(false);
+            closecamden.setDisable(false);
+            closeloyal.setDisable(true);
+        }
+    });
+    closechecking.setOnAction(e -> {
+        if (closechecking.isSelected()) {
+            closenb.setDisable(true);
+            closenewark.setDisable(true);
+            closecamden.setDisable(true);
+            closeloyal.setDisable(true);
+
+        }
+    });
+    closesavings.setOnAction(e -> {
+        if (closesavings.isSelected()) {
+            closenb.setDisable(true);
+            closenewark.setDisable(true);
+            closecamden.setDisable(true);
+            closeloyal.setDisable(false);
+
+        }
+    });
+    closemarket.setOnAction(e -> {
+        if (closemarket.isSelected()) {
+            closenb.setDisable(true);
+            closenewark.setDisable(true);
+            closecamden.setDisable(true);
+            closeloyal.setDisable(false);
         }
     });
 
@@ -119,12 +168,12 @@ public void initialize() {
             //do something here
         }
         Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
-        String depositStr = deposit.getText();
-        double deposit = Double.parseDouble(depositStr);
-        //check for deposit amount
+        String balanceStr = balance.getText();
+        double balance = Double.parseDouble(balanceStr);
+        //check for balance amount
 
         if (checking.isSelected()) {
-            Account account = new Checking(user, deposit);
+            Account account = new Checking(user, balance);
             db.open(account);
             //check for return
         }
@@ -132,31 +181,67 @@ public void initialize() {
         {
             if(loyal.isSelected())
             {
-                Account account = new Savings(user, deposit, true);
+                Account account = new Savings(user, balance, true);
                 db.open(account);
             }
             else{
-                Account account = new Savings(user, deposit, false);
+                Account account = new Savings(user, balance, false);
                 db.open(account);
             }
         }
-        //do money saving deposit check, for simplicity sake i am not gonna do it for now
+        //do money saving balance check, for simplicity sake i am not gonna do it for now
         if(market.isSelected())
         {
-            if(deposit>2000) {
-                Account account = new MoneyMarket(user, deposit);
+            if(balance>2000) {
+                Account account = new MoneyMarket(user, balance);
                 db.open(account);
             }
+        }
+
+        //college account stuff
+        if(collegeChecking.isSelected())
+        {
+            if(nb.isSelected())
+            {
+                Campus newBrunswick = Campus.NEW_BRUNSWICK;
+                Account account = new CollegeChecking(user, balance, newBrunswick);
+                db.open(account);
+            }
+            if(newark.isSelected())
+            {
+                Campus NEWARK = Campus.NEWARK;
+                Account account = new CollegeChecking(user, balance, NEWARK);
+                db.open(account);
+            }
+            if(camden.isSelected())
+            {
+                Campus CAMDEN = Campus.CAMDEN;
+                Account account = new CollegeChecking(user, balance, CAMDEN);
+                db.open(account);
+            }
+
         }
 
     }
     @FXML
     private void closeAccount(ActionEvent event)
     {
+        String firstNameStr = closefirstName.getText();
+        String lastNameStr = closelastName.getText();
+        String dobStr = closedob.getValue().toString();
+        Date userDOB = new Date(closedob.getValue().getMonthValue(), closedob.getValue().getDayOfMonth(), closedob.getValue().getYear());
+        if (!userDOB.isValid())
+        {
+            //do something here
+        }
+        Profile user = new Profile(firstNameStr,lastNameStr,userDOB);
+        if(closechecking.isSelected())
+        {
+            Account account = new Checking(user,0);
+            db.close(account);
+        }
 
     }
-
-    //make combo box for account type
 
 
 }
