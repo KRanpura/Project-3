@@ -201,14 +201,13 @@ public class AccountDatabase
         {
             return("Account database is empty!");
         }
-        String sorted = "*Accounts sorted by account type and profile.\n";
+        StringBuilder sorted = new StringBuilder("*Accounts sorted by account type and profile.\n");
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
-            sorted += "\n";
-            sorted += databaseToPrint[i].toString();
+            sorted.append("\n").append(databaseToPrint[i].toString());
         }
-        return sorted;
+        return sorted.toString();
     }
 
     /**
@@ -221,16 +220,15 @@ public class AccountDatabase
         {
             return("Account database is empty!");
         }
-        String fees = "*List of accounts with fee and monthly interest.";
+        StringBuilder fees = new StringBuilder("*List of accounts with fee and monthly interest.\n");
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
-            fees += "\n" + (databaseToPrint[i].toString() + "::fee $" +
-                    databaseToPrint[i].format(databaseToPrint[i].monthlyFee()) +
-                    "::monthly interest $" +
-                    databaseToPrint[i].format(databaseToPrint[i].monthlyInterest())) + "\n";
+            fees.append("\n").append(databaseToPrint[i].toString()).append("::fee $").append(
+                    databaseToPrint[i].format(databaseToPrint[i].monthlyFee())).append("::monthly interest $").append(
+                    databaseToPrint[i].format(databaseToPrint[i].monthlyInterest())).append("\n");
         }
-        return fees;
+        return fees.toString();
     }
 
     /**
@@ -243,16 +241,16 @@ public class AccountDatabase
         {
             return("Account database is empty!");
         }
-        String feesApplied = "*list of accounts with fees and interests applied.\n";
+        StringBuilder feesApplied = new StringBuilder("*list of accounts with fees and interests applied.\n");
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
             double fees = databaseToPrint[i].monthlyFee();
             double interest = databaseToPrint[i].monthlyInterest();
             databaseToPrint[i].setBalance(databaseToPrint[i].getBalance() + fees + interest);
-            feesApplied += databaseToPrint[i].toString();
+            feesApplied.append(databaseToPrint[i].toString());
         }
-        return feesApplied;
+        return feesApplied.toString();
     }
 
     /**

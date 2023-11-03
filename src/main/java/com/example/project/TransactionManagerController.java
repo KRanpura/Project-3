@@ -30,7 +30,7 @@ public class TransactionManagerController
     public TextField closefirstName, closelastName;
     public TextField depfirstName, deplastName;
     public TextField witfirstName, witlastName;
-    public TextField displayField;
+    public TextArea displayField;
     @FXML
     public RadioButton checking, collegeChecking, savings, market, nb, newark,camden;
     public RadioButton closechecking,closecollegeChecking,closesavings, closemarket, closenb, closenewark, closecamden;

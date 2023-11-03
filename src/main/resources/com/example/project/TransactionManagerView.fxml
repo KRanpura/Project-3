@@ -7,6 +7,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -363,11 +364,11 @@
                               <children>
                                  <Button mnemonicParsing="false" onAction="#printAllAccounts" prefHeight="19.0" prefWidth="110.0" text="Print All Accounts" />
                                  <Button mnemonicParsing="false" onAction="#printInterestsAndFees" prefHeight="24.0" prefWidth="141.0" text="Print Interests and Fees" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                 <Button alignment="CENTER" fx:id = "loadAccounts" onAction = "#loadAccounts" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                 <Button fx:id="loadAccounts" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                  <Button mnemonicParsing="false" onAction="#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
                               </children>
                            </GridPane>
-                           <TextField fx:id="displayField" editable="false" layoutX="27.0" layoutY="85.0" prefHeight="230.0" prefWidth="635.0" />
+                           <TextArea editable="false" fx:id = "displayField" layoutX="30.0" layoutY="74.0" prefHeight="231.0" prefWidth="631.0" wrapText="true" />
                         </children></AnchorPane>
                     </content>
                 </Tab>
