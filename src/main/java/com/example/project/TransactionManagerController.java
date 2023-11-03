@@ -37,7 +37,7 @@ public class TransactionManagerController
     public ToggleGroup accountGroup,closeaccountGroup, depaccountGroup, witaccountGroup;
     public TextField balance, deposit, withdraw;
     public CheckBox loyal, closeloyal;
-    public ToggleGroup campusGroup,closecampusGroup, depcampusGroup, witcampusGroup;
+    public ToggleGroup campusGroup,closecampusGroup;
 
 @FXML
 public void initialize() {
@@ -65,18 +65,11 @@ public void initialize() {
         depmarket.setToggleGroup(depaccountGroup);
         depsavings.setToggleGroup(depaccountGroup);
 
-        depnb.setToggleGroup(depcampusGroup);
-        depnewark.setToggleGroup(depcampusGroup);
-        depcamden.setToggleGroup(depcampusGroup);
-
         witchecking.setToggleGroup(witaccountGroup);
         witcollegeChecking.setToggleGroup(witaccountGroup);
         witmarket.setToggleGroup(witaccountGroup);
         witsavings.setToggleGroup(witaccountGroup);
 
-        witnb.setToggleGroup(witcampusGroup);
-        witnewark.setToggleGroup(witcampusGroup);
-        witcamden.setToggleGroup(witcampusGroup);
 
     balance.addEventFilter(KeyEvent.KEY_TYPED, event -> {
         String character = event.getCharacter();
@@ -108,13 +101,6 @@ public void initialize() {
     closecamden.setDisable(true);
     closeloyal.setDisable(true);
 
-    depnb.setDisable(true);
-    depnewark.setDisable(true);
-    depcamden.setDisable(true);
-
-    witnb.setDisable(true);
-    witnewark.setDisable(true);
-    witcamden.setDisable(true);
 
     collegeChecking.setOnAction(e -> {
         if (collegeChecking.isSelected()) {
@@ -186,66 +172,6 @@ public void initialize() {
         }
     });
 
-
-
-    depcollegeChecking.setOnAction(e -> {
-        if (depcollegeChecking.isSelected()) {
-            depnb.setDisable(false);
-            depnewark.setDisable(false);
-            depcamden.setDisable(false);
-        }
-    });
-    depchecking.setOnAction(e -> {
-        if (depchecking.isSelected()) {
-            depnb.setDisable(true);
-            depnewark.setDisable(true);
-            depcamden.setDisable(true);
-        }
-    });
-    depsavings.setOnAction(e -> {
-        if (depsavings.isSelected()) {
-            depnb.setDisable(true);
-            depnewark.setDisable(true);
-            depcamden.setDisable(true);
-        }
-    });
-    depmarket.setOnAction(e -> {
-        if (depmarket.isSelected()) {
-            depnb.setDisable(true);
-            depnewark.setDisable(true);
-            depcamden.setDisable(true);
-        }
-    });
-
-
-    witcollegeChecking.setOnAction(e -> {
-        if (witcollegeChecking.isSelected()) {
-            witnb.setDisable(false);
-            witnewark.setDisable(false);
-            witcamden.setDisable(false);
-        }
-    });
-    witchecking.setOnAction(e -> {
-        if (witchecking.isSelected()) {
-            witnb.setDisable(true);
-            witnewark.setDisable(true);
-            witcamden.setDisable(true);
-        }
-    });
-    witsavings.setOnAction(e -> {
-        if (witsavings.isSelected()) {
-            witnb.setDisable(true);
-            witnewark.setDisable(true);
-            witcamden.setDisable(true);
-        }
-    });
-    witmarket.setOnAction(e -> {
-        if (witmarket.isSelected()) {
-            witnb.setDisable(true);
-            witnewark.setDisable(true);
-            witcamden.setDisable(true);
-        }
-    });
 
 }
 
@@ -455,14 +381,6 @@ public void initialize() {
             displayError("Please choose an account type!");
             return;
         }
-        if(depcollegeChecking.isSelected())
-        {
-            if(!(depnb.isSelected() || depnewark.isSelected() || depcamden.isSelected()))
-            {
-                displayError("Please choose a campus!");
-                return;
-            }
-        }
         String firstNameStr = depfirstName.getText();
         String lastNameStr = deplastName.getText();
       //  String dobStr = depdob.getValue().toString();
@@ -497,18 +415,6 @@ public void initialize() {
         else if(depcollegeChecking.isSelected())
         {
             CollegeChecking collegeAcc = new CollegeChecking(user, deposit, null);
-            if(depnb.isSelected())
-            {
-                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
-            }
-            else if(depnewark.isSelected())
-            {
-                collegeAcc.setCampus(Campus.NEWARK);
-            }
-            else if(depcamden.isSelected())
-            {
-                collegeAcc.setCampus(Campus.CAMDEN);
-            }
             account = collegeAcc;
         }
         db.deposit(account);
@@ -528,14 +434,7 @@ public void initialize() {
             displayError("Please choose an account type!");
             return;
         }
-        if(witcollegeChecking.isSelected())
-        {
-            if(!(witnb.isSelected() || witnewark.isSelected() || witcamden.isSelected()))
-            {
-                displayError("Please choose a campus!");
-                return;
-            }
-        }
+
         String firstNameStr = witfirstName.getText();
         String lastNameStr = witlastName.getText();
         String dobStr = witdob.getValue().toString();
@@ -570,18 +469,6 @@ public void initialize() {
         else if(witcollegeChecking.isSelected())
         {
             CollegeChecking collegeAcc = new CollegeChecking(user, withdraw, null);
-            if(witnb.isSelected())
-            {
-                collegeAcc.setCampus(Campus.NEW_BRUNSWICK);
-            }
-            else if(witnewark.isSelected())
-            {
-                collegeAcc.setCampus(Campus.NEWARK);
-            }
-            else if(witcamden.isSelected())
-            {
-                collegeAcc.setCampus(Campus.CAMDEN);
-            }
             account = collegeAcc;
         }
         if (!db.contains(account))

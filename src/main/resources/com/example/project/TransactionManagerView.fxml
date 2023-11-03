@@ -18,7 +18,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.TransactionManagerController">
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="377.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <top>
+      <left>
         <TabPane prefHeight="376.0" prefWidth="704.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Open">
@@ -105,7 +105,7 @@
                                      </RadioButton>
                                  </children>
                               </GridPane>
-                              <Button mnemonicParsing="false" onAction="#openAccount" text="Open" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                              <Button mnemonicParsing="false" onAction="#openAccount" text="Open" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                                  <CheckBox fx:id="loyal" mnemonicParsing="false" text="Loyal Customer" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                                  <Label text="Intial Deposit" GridPane.columnIndex="3" />
                                  <TextField fx:id="balance" prefHeight="25.0" prefWidth="127.0" GridPane.columnIndex="4" />
@@ -117,9 +117,9 @@
                 </Tab>
                 <Tab text="Close">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="702.0">
                             <children>
-                                <GridPane layoutX="14.0" prefHeight="338.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
+                                <GridPane layoutX="14.0" prefHeight="318.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.4000244140625" minWidth="10.0" prefWidth="107.5999984741211" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.00000762939453" minWidth="10.0" prefWidth="195.39997558593748" />
@@ -198,7 +198,7 @@
                                                 </RadioButton>
                                             </children>
                                         </GridPane>
-                                        <Button mnemonicParsing="false" onAction="#closeAccount" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                        <Button mnemonicParsing="false" onAction="#closeAccount" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                                         <CheckBox fx:id="closeloyal" mnemonicParsing="false" text="Loyal Customer" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                                     </children>
                                 </GridPane>
@@ -267,31 +267,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                         </GridPane>
-                                        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                            <children>
-                                                <RadioButton fx:id="depnb" mnemonicParsing="false" text="NB" GridPane.halignment="CENTER">
-                                                    <toggleGroup>
-                                                        <ToggleGroup fx:id="depcampusGroup" />
-                                                    </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="depnewark" mnemonicParsing="false" text="Newark" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                                    <fx:reference source="depcampusGroup" />
-                                                </RadioButton>
-                                                <RadioButton fx:id="depcamden" mnemonicParsing="false" text="Camden" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                                    <fx:reference source="depcampusGroup" />
-                                                </RadioButton>
-                                            </children>
-                                        </GridPane>
-                                 <Button mnemonicParsing="false" onAction="#depositAccount" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                 <Label text="Amount" GridPane.columnIndex="3" />
+                                 <Button mnemonicParsing="false" onAction="#depositAccount" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                 <Label text="Amount" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                                  <TextField fx:id="deposit" GridPane.columnIndex="4" />
                                     </children>
                                 </GridPane>
@@ -360,31 +337,8 @@
                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                            </rowConstraints>
                                        </GridPane>
-                                       <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                           <columnConstraints>
-                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                           </columnConstraints>
-                                           <rowConstraints>
-                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                           </rowConstraints>
-                                           <children>
-                                               <RadioButton fx:id="witnb" mnemonicParsing="false" text="NB" GridPane.halignment="CENTER">
-                                                   <toggleGroup>
-                                                       <ToggleGroup fx:id="witcampusGroup" />
-                                                   </toggleGroup>
-                                               </RadioButton>
-                                               <RadioButton fx:id="witnewark" mnemonicParsing="false" text="Newark" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                                   <fx:reference source="witcampusGroup" />
-                                               </RadioButton>
-                                               <RadioButton fx:id="witcamden" mnemonicParsing="false" text="Camden" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                                   <fx:reference source="witcampusGroup" />
-                                               </RadioButton>
-                                           </children>
-                                       </GridPane>
-                                       <Button mnemonicParsing="false" onAction="#withdrawAccount" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                       <Label text="Amount" GridPane.columnIndex="3" />
+                                       <Button mnemonicParsing="false" onAction="#withdrawAccount" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                       <Label text="Amount" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                                        <TextField fx:id="withdraw" GridPane.columnIndex="4" />
                                    </children>
                                </GridPane>
@@ -396,7 +350,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <GridPane layoutX="27.0" layoutY="11.0" prefHeight="55.0" prefWidth="702.0" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="-27.0" AnchorPane.topAnchor="11.0">
+                           <GridPane layoutX="20.0" layoutY="6.0" prefHeight="55.0" prefWidth="702.0" AnchorPane.bottomAnchor="286.4" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="-19.600000000000023" AnchorPane.topAnchor="6.0">
                              <columnConstraints>
                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.5" minWidth="10.0" prefWidth="114.5" />
                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.5" minWidth="10.0" prefWidth="155.0" />
@@ -407,10 +361,10 @@
                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                              </rowConstraints>
                               <children>
-                                 <Button onAction="#printAllAccounts" mnemonicParsing="false" text="Print All Accounts" />
-                                 <Button onAction="#printInterestsAndFees" mnemonicParsing="false" prefHeight="28.0" prefWidth="150.0" text="Print Interests and Fees" GridPane.columnIndex="2" />
-                                 <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" text="Load Accounts from File" GridPane.columnIndex="1" />
-                                 <Button onAction="#updateAccWithFees" mnemonicParsing="false" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" />
+                                 <Button mnemonicParsing="false" onAction="#printAllAccounts" prefHeight="19.0" prefWidth="110.0" text="Print All Accounts" />
+                                 <Button mnemonicParsing="false" onAction="#printInterestsAndFees" prefHeight="24.0" prefWidth="141.0" text="Print Interests and Fees" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                 <Button mnemonicParsing="false" onAction="#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
                               </children>
                            </GridPane>
                            <TextField fx:id="displayField" editable="false" layoutX="27.0" layoutY="85.0" prefHeight="230.0" prefWidth="635.0" />
@@ -419,6 +373,6 @@
                 </Tab>
             </tabs>
         </TabPane>
-    </top>
+      </left>
 </BorderPane>
 </AnchorPane>
