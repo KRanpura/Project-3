@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +13,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import java.util.Scanner;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Window;
 
 public class TransactionManagerController
 {
@@ -38,8 +41,9 @@ public class TransactionManagerController
     public TextField balance, deposit, withdraw;
     public CheckBox loyal, closeloyal;
     public ToggleGroup campusGroup,closecampusGroup;
+    public Button loadAccounts;
 
-@FXML
+    @FXML
 public void initialize() {
 
         nb.setToggleGroup(campusGroup);
@@ -417,8 +421,15 @@ public void initialize() {
             CollegeChecking collegeAcc = new CollegeChecking(user, deposit, null);
             account = collegeAcc;
         }
-        db.deposit(account);
-        displayMessage(user.toString() + "(" + account.getTypeInitial() + ") Deposit - balance updated.");
+        if (!db.contains(account))
+        {
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") not in database.");
+        }
+        else
+        {
+            db.deposit(account);
+            displayMessage(user.toString() + "(" + account.getTypeInitial() + ") Deposit - balance updated.");
+        }
     }
 
     @FXML
@@ -530,4 +541,72 @@ public void initialize() {
         displayField.setText(displayString);
     }
 
+    @FXML
+    private void loadAccounts(ActionEvent event) throws FileNotFoundException
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open text file");
+
+        Stage stage = (Stage) loadAccounts.getScene().getWindow();
+        File textFile = fileChooser.showOpenDialog(stage);
+        File file = new File (textFile.getAbsolutePath());
+
+        if (file != null)
+        {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine())
+            {
+                String line = scanner.nextLine().trim(); // Read the entire line
+                if (!line.isEmpty())
+                {
+                    String[] accTypeInfo = line.split(",", 2); // Split the line into acc type and arguments
+                    String accType = accTypeInfo[0];
+                    String userString = (accTypeInfo.length > 1) ? accTypeInfo[1] : "";
+                    userString = userString.trim();
+
+                    String [] accInfo = userString.split(",");
+                    String firstName = accInfo[0];
+                    String lastName = accInfo[1];
+                    String dateStr = accInfo[2];
+                    int month = Integer.parseInt(dateStr.split("/")[0]);
+                    int day = Integer.parseInt(dateStr.split("/")[1]);
+                    int year = Integer.parseInt(dateStr.split("/")[2]);
+                    Date dob = new Date(month, day, year);
+                    Profile profile = new Profile(firstName, lastName, dob);
+                    double balance = Double.parseDouble(accInfo[3].trim());
+                    switch (accType)
+                    {
+                        case "C":
+                            Checking checking = new Checking (profile, balance);
+                            db.open(checking);
+                            break;
+                        case "CC":
+                            Campus campus = Campus.values()[Integer.parseInt(accInfo[4])]; // Parse the campus code
+                            CollegeChecking collegeChecking = new CollegeChecking(profile, balance, campus);
+                            db.open(collegeChecking);
+                            break;
+                        case "S":
+                            Savings savings = null;
+                            if (Integer.parseInt(accInfo[4]) == 0)
+                            {
+                                savings = new Savings(profile, balance, false);
+                            }
+                            else //if 1
+                            {
+                                savings = new Savings(profile, balance, true);
+                            }
+                            db.open(savings);
+                            break;
+                        case "MM":
+                            MoneyMarket market = new MoneyMarket(profile, balance);
+                            db.open(market);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            displayMessage("Accounts loaded successfully!");
+        }
+    }
 }

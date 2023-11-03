@@ -205,7 +205,7 @@ public class AccountDatabase
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
-            sorted = sorted + "\n";
+            sorted += "\n";
             sorted += databaseToPrint[i].toString();
         }
         return sorted;

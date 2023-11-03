@@ -363,7 +363,7 @@
                               <children>
                                  <Button mnemonicParsing="false" onAction="#printAllAccounts" prefHeight="19.0" prefWidth="110.0" text="Print All Accounts" />
                                  <Button mnemonicParsing="false" onAction="#printInterestsAndFees" prefHeight="24.0" prefWidth="141.0" text="Print Interests and Fees" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                 <Button alignment="CENTER" fx:id = "loadAccounts" onAction = "#loadAccounts" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                  <Button mnemonicParsing="false" onAction="#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
                               </children>
                            </GridPane>
