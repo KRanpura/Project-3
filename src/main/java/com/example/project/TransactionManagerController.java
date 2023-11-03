@@ -1,3 +1,9 @@
+/**
+ * TransactionManagerController.java initializes FXML UI components in
+ * TransactionManagerView and contains methods to update the account database
+ * by handling events.
+ */
+
 package com.example.project;
 
 import javafx.fxml.FXML;
@@ -43,8 +49,12 @@ public class TransactionManagerController
     public ToggleGroup campusGroup,closecampusGroup;
     public Button loadAccounts;
 
+    /**
+     * Initializes FXML UI components and toggle groups declared
+     * above while restricting incorrect input.
+     */
     @FXML
-public void initialize() {
+    public void initialize() {
 
         nb.setToggleGroup(campusGroup);
         newark.setToggleGroup(campusGroup);
@@ -179,6 +189,10 @@ public void initialize() {
 
 }
 
+    /**
+     * Parses user input for account information and opens a new
+     * account in the database when the Open button is clicked.
+     */
     @FXML
     private void openAccount() //I removed the ActionEvent event param bc we never use it
     {
@@ -291,6 +305,10 @@ public void initialize() {
         }
     }
 
+    /**
+     * Parses user input for account information to close an account
+     * in the database when Close button clicked.
+     */
     @FXML
     private void closeAccount()
     {
@@ -372,6 +390,10 @@ public void initialize() {
         }
     }
 
+    /**
+     * Parses user input for account information to find an account in the database
+     * and make a deposit to the account when Deposit button clicked.
+     */
     @FXML
     private void depositAccount()
     {
@@ -425,6 +447,10 @@ public void initialize() {
         {
             displayError(user.toString() + "(" + account.getTypeInitial() + ") not in database.");
         }
+        else if (!db.findAccountType(account).equals(account.getTypeInitial()))
+        {
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") not in database.");
+        }
         else
         {
             db.deposit(account);
@@ -432,6 +458,10 @@ public void initialize() {
         }
     }
 
+    /**
+     * Parses user input for account information to find account in the database
+     * and withdraw money from the account when Withdraw button clicked.
+     */
     @FXML
     private void withdrawAccount()
     {
@@ -488,11 +518,15 @@ public void initialize() {
             displayError(s);
             return;
         }
+        else if (!db.findAccountType(account).equals(account.getTypeInitial()))
+        {
+            displayError(user.toString() + "(" + account.getTypeInitial() + ") not in database.");
+            return;
+        }
         boolean withdrew = db.withdraw(account);
         if(!withdrew)
         {
             displayError("Withdraw- insufficient funds!");
-            return;
         }
         else
         {
@@ -501,25 +535,34 @@ public void initialize() {
 
     }
 
+    /**
+     * Displays an error pop up to the user.
+     * @param s, string to be displayed in the error pop up
+     */
     private void displayError (String s)
     {
-//        if (!verbose)
-//            return;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(s);
         alert.show();
     }
 
+    /**
+     * Displays a message pop up to the user.
+     * @param s, string to be displayed in the message pop up
+     */
     private void displayMessage(String s)
     {
-//        if (!verbose)
-//            return;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText(s);
         alert.show();
     }
+
+    /**
+     * Prints all accounts sorted by account type when
+     * Print All Accounts button clicked.
+     */
     @FXML
     private void printAllAccounts()
     {
@@ -527,6 +570,10 @@ public void initialize() {
         displayField.setText(displayString);
     }
 
+    /**
+     * Prints all accounts along with fees and interests to be applied,
+     * sorted by account type, when Print Interests and Fees button clicked.
+     */
     @FXML
     private void printInterestsAndFees()
     {
@@ -534,6 +581,10 @@ public void initialize() {
         displayField.setText(displayString);
     }
 
+    /**
+     * Prints all accounts sorted by account type with fees and interests applied
+     * when Update Account with Interests and Fees button clicked.
+     */
     @FXML
     private void updateAccWithFees()
     {
@@ -541,8 +592,12 @@ public void initialize() {
         displayField.setText(displayString);
     }
 
+    /**
+     * Loads accounts from a text file to the account database.
+     * @throws FileNotFoundException
+     */
     @FXML
-    private void loadAccounts(ActionEvent event) throws FileNotFoundException
+    private void loadAccounts() throws FileNotFoundException
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open text file");

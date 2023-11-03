@@ -47,6 +47,23 @@ public class AccountDatabase
     }
 
     /**
+     * Public method returning account type of account found in find() method
+     * @param account account to search for
+     * @return index of account
+     */
+    public String findAccountType(Account account)
+    {
+        if (find(account) != -1)
+        {
+            return accounts[find(account)].getTypeInitial();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
      * Grows the database when it is full.
      */
     private void grow() //increase the capacity by 4
@@ -116,6 +133,10 @@ public class AccountDatabase
         {
             return false;
         }
+        else if (!accounts[index].getTypeInitial().equals(account.getTypeInitial()))
+        {
+            return false;
+        }
         else
         {
             this.accounts[index] = null; // Remove account
@@ -140,6 +161,10 @@ public class AccountDatabase
     {
         int accIndex = find(account);
         if (accIndex == NOT_FOUND)
+        {
+            return false;
+        }
+        else if (!accounts[accIndex].getTypeInitial().equals(account.getTypeInitial()))
         {
             return false;
         }
@@ -178,6 +203,10 @@ public class AccountDatabase
         double depositAmount = account.getBalance();
         if (accIndex == NOT_FOUND) {
             return; // Exit the method to avoid further processing
+        }
+        else if (!accounts[accIndex].getTypeInitial().equals(account.getTypeInitial()))
+        {
+            return ;
         }
         double currentBalance = this.accounts[accIndex].getBalance();
         currentBalance += depositAmount;
