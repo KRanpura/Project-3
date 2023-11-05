@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -24,7 +25,7 @@
             <tabs>
                 <Tab text="Open">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0" style="-fx-background-color: ffc8dd;">
                             <children>
                                 <GridPane layoutX="14.0" prefHeight="338.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
@@ -106,7 +107,7 @@
                                      </RadioButton>
                                  </children>
                               </GridPane>
-                              <Button mnemonicParsing="false" onAction="#openAccount" text="Open" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                              <Button mnemonicParsing="false" onAction="#openAccount" style="-fx-background-color: cdb4db;" text="Open" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                                  <CheckBox fx:id="loyal" mnemonicParsing="false" text="Loyal Customer" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                                  <Label text="Intial Deposit" GridPane.columnIndex="3" />
                                  <TextField fx:id="balance" prefHeight="25.0" prefWidth="127.0" GridPane.columnIndex="4" />
@@ -118,7 +119,7 @@
                 </Tab>
                 <Tab text="Close">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="702.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="702.0" style="-fx-background-color: ffc8dd;">
                             <children>
                                 <GridPane layoutX="14.0" prefHeight="318.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
@@ -199,7 +200,7 @@
                                                 </RadioButton>
                                             </children>
                                         </GridPane>
-                                        <Button mnemonicParsing="false" onAction="#closeAccount" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                        <Button mnemonicParsing="false" onAction="#closeAccount" style="-fx-background-color: cdb4db;" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                                         <CheckBox fx:id="closeloyal" mnemonicParsing="false" text="Loyal Customer" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                                     </children>
                                 </GridPane>
@@ -210,7 +211,7 @@
                 </Tab>
                 <Tab text="Deposit">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0" style="-fx-background-color: ffc8dd;">
                             <children>
                                 <GridPane layoutX="14.0" prefHeight="338.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
@@ -268,8 +269,11 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                         </GridPane>
-                                 <Button mnemonicParsing="false" onAction="#depositAccount" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                 <Label text="Amount" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                                 <Button mnemonicParsing="false" onAction="#depositAccount" style="-fx-background-color: cdb4db;" text="Deposit" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                 <Label text="Amount" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                                    <GridPane.margin>
+                                       <Insets />
+                                    </GridPane.margin></Label>
                                  <TextField fx:id="deposit" GridPane.columnIndex="4" />
                                     </children>
                                 </GridPane>
@@ -280,7 +284,7 @@
                 </Tab>
                <Tab text="Withdraw">
                    <content>
-                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0">
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="702.0" style="-fx-background-color: ffc8dd;">
                            <children>
                                <GridPane layoutX="14.0" prefHeight="338.0" prefWidth="677.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="0.0">
                                    <columnConstraints>
@@ -338,7 +342,7 @@
                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                            </rowConstraints>
                                        </GridPane>
-                                       <Button mnemonicParsing="false" onAction="#withdrawAccount" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                       <Button mnemonicParsing="false" onAction="#withdrawAccount" style="-fx-background-color: cdb4db;" text="Withdraw" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                        <Label text="Amount" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                                        <TextField fx:id="withdraw" GridPane.columnIndex="4" />
                                    </children>
@@ -349,7 +353,7 @@
                </Tab>
                 <Tab text="Account Database">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: ffc8dd;">
                         <children>
                            <GridPane layoutX="20.0" layoutY="6.0" prefHeight="55.0" prefWidth="702.0" AnchorPane.bottomAnchor="286.4" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="-19.600000000000023" AnchorPane.topAnchor="6.0">
                              <columnConstraints>
@@ -362,13 +366,13 @@
                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                              </rowConstraints>
                               <children>
-                                 <Button mnemonicParsing="false" onAction="#printAllAccounts" prefHeight="19.0" prefWidth="110.0" text="Print All Accounts" />
-                                 <Button mnemonicParsing="false" onAction="#printInterestsAndFees" prefHeight="24.0" prefWidth="141.0" text="Print Interests and Fees" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                 <Button fx:id="loadAccounts" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="21.0" prefWidth="146.0" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                 <Button mnemonicParsing="false" onAction="#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
+                                 <Button mnemonicParsing="false" onAction="#printAllAccounts" prefHeight="19.0" prefWidth="110.0" style="-fx-background-color: cdb4db;" text="Print All Accounts" />
+                                 <Button mnemonicParsing="false" onAction="#printInterestsAndFees" prefHeight="24.0" prefWidth="141.0" style="-fx-background-color: cdb4db;" text="Print Interests and Fees" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                 <Button fx:id="loadAccounts" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="21.0" prefWidth="146.0" style="-fx-background-color: cdb4db;" text="Load Accounts from File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                 <Button mnemonicParsing="false" onAction="#updateAccWithFees" prefHeight="25.0" prefWidth="237.0" style="-fx-background-color: cdb4db;" text="Update Accounts With Interests and Fees" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
                               </children>
                            </GridPane>
-                           <TextArea fx:id="displayField" editable="false" layoutX="30.0" layoutY="74.0" prefHeight="231.0" prefWidth="631.0" wrapText="true" />
+                            <TextArea fx:id="displayField" editable="false" layoutX="30.0" layoutY="74.0" prefHeight="231.0" prefWidth="631.0" wrapText="true" />
                         </children></AnchorPane>
                     </content>
                 </Tab>
